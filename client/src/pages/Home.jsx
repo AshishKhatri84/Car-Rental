@@ -30,13 +30,7 @@ const HomePage = () => {
           © 2025 CarRental Inc. All rights reserved.
         </p>
         <p>
-          Contact: <a href="mailto:carrental@gmail.com" target='blank'>carrental@gmail.com</a>
-        </p>
-        <p>
-          Phone: +1234567890
-        </p>
-        <p>
-          Address: abc, xyz, 12345
+          Contact: <a href="mailto:carrental@gmail.com" target='blank'>carrental@gmail.com</a> | <span></span>  Phone: +1234567890 | <span></span>  Address: abc, xyz, 12345
         </p>
       </footer>
     </div>
