@@ -1,13 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import './Bookings.css';
 
 const BookingsPage = () => {
-  const [vehicles, setVehicles] = useState([
-    { id: 1, name: 'Tesla Model 3', type: 'Electric', price: '$90/day' },
-    { id: 2, name: 'Ford Mustang', type: 'Convertible', price: '$120/day' },
-    { id: 3, name: 'Toyota Innova', type: 'SUV', price: '$70/day' },
-  ]);
+  const [vehicles, setVehicles] = useState([]);
   const [bookings, setBookings] = useState([]);
   const [newBooking, setNewBooking] = useState({
     vehicleId: '',
@@ -15,33 +10,47 @@ const BookingsPage = () => {
     bookingDate: '',
   });
 
-  // Fetch current bookings from the backend
-  const fetchBookings = () => {
-    axios.get('http://localhost:5000/api/bookings')
-      .then((response) => {
-        setBookings(response.data);
-      })
-      .catch((error) => {
-        console.error('There was an error fetching the bookings:', error);
-      });
-  };
-
   useEffect(() => {
-    fetchBookings(); // Fetch bookings on initial load
+    const storedVehicles = JSON.parse(localStorage.getItem('vehicles'));
+    if (storedVehicles && storedVehicles.length > 0) {
+      // Convert _id to id (number or string as per use)
+      const formattedVehicles = storedVehicles.map((v) => ({
+        id: v._id,
+        name: v.name,
+        type: v.type,
+        price: v.price,
+      }));
+      setVehicles(formattedVehicles);
+    } else {
+      // Fallback sample vehicles
+      setVehicles([
+        { id: '1', name: 'Tesla Model 3', type: 'Electric', price: '$90/day' },
+        { id: '2', name: 'Ford Mustang', type: 'Convertible', price: '$120/day' },
+        { id: '3', name: 'Toyota Innova', type: 'SUV', price: '$70/day' },
+      ]);
+    }
   }, []);
 
-  // Handle booking form submission
-  const handleBookingSubmit = async (e) => {
+  const handleBookingSubmit = (e) => {
     e.preventDefault();
 
-    try {
-      const response = await axios.post('http://localhost:5000/api/bookings', newBooking);
-      // After successful booking, fetch the updated list of bookings
-      fetchBookings(); 
-      setNewBooking({ vehicleId: '', userName: '', bookingDate: '' }); // Reset form
-    } catch (error) {
-      console.error('Error creating booking:', error);
-    }
+    const bookingId = Date.now().toString(); // Simulate unique ID
+
+    const bookingToAdd = {
+      _id: bookingId,
+      vehicleId: newBooking.vehicleId,
+      userName: newBooking.userName,
+      bookingDate: newBooking.bookingDate,
+      bookingStatus: 'Pending',
+    };
+
+    setBookings([...bookings, bookingToAdd]);
+    setNewBooking({ vehicleId: '', userName: '', bookingDate: '' });
+  };
+
+  const handleDeleteBooking = (id) => {
+    const updatedBookings = bookings.filter((b) => b._id !== id);
+    setBookings(updatedBookings);
   };
 
   return (
@@ -84,14 +93,15 @@ const BookingsPage = () => {
           <p>No bookings available.</p>
         ) : (
           bookings.map((booking) => {
-            const vehicle = vehicles.find(v => v.id === booking.vehicleId);  // Find vehicle from sample data
+            const vehicle = vehicles.find(v => v.id === booking.vehicleId);
             return (
               <div key={booking._id} className="booking-card">
                 <h3>{booking.userName}</h3>
                 <p>Vehicle: {vehicle ? vehicle.name : 'N/A'} ({vehicle ? vehicle.type : 'N/A'})</p>
                 <p>Price: {vehicle ? vehicle.price : 'N/A'}</p>
                 <p>Booking Date: {new Date(booking.bookingDate).toLocaleDateString()}</p>
-                <p>Status: {booking.bookingStatus || 'Pending'}</p>
+                <p>Status: {booking.bookingStatus}</p>
+                <button className="btn-danger" onClick={() => handleDeleteBooking(booking._id)}>Delete</button>
               </div>
             );
           })
