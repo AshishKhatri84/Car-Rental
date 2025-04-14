@@ -26,7 +26,18 @@ const HomePage = () => {
       </section>
 
       <footer className="footer">
-        <p>© 2025 CarRental Inc. All rights reserved.</p>
+        <p>
+          © 2025 CarRental Inc. All rights reserved.
+        </p>
+        <p>
+          Contact: <a href="mailto:carrental@gmail.com" target='blank'>carrental@gmail.com</a>
+        </p>
+        <p>
+          Phone: +1234567890
+        </p>
+        <p>
+          Address: abc, xyz, 12345
+        </p>
       </footer>
     </div>
   );
