@@ -9,7 +9,7 @@ const app = express();
 dotenv.config();
 
 app.use(express.json());  // Middleware to parse JSON requests
-app.use(cors({origin: "*"}));  // Allow cross-origin requests
+app.use(cors());  // Allow cross-origin requests
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
