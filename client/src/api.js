@@ -1,7 +1,7 @@
 // src/api.js
 import axios from 'axios';
 
-const API_URL = "https://api-car.onrender.com" || "http://localhost:5000/api"; 
+const API_URL = 'http://localhost:5000/api'; // Change if your backend is on a different port
 
 export const registerUser = async (userData) => {
   return axios.post(`${API_URL}/auth/register`, userData);
