@@ -1,4 +1,4 @@
-# Car Rental Web Application
+# Car Rental Booking System
 
 A full-stack car rental platform built with Node.js, Express, React, and MongoDB. This application allows users to browse available cars, make bookings, and manage rentals. The project is deployed on Vercel, but currently, MongoDB is not connected to the deployment.
 
@@ -10,18 +10,23 @@ https://car-rental-xi-blue.vercel.app/
 
 ## 📁 Project Structure
 
+```plaintext
 car-rental/
 ├── api/               # Backend API (Node.js + Express)
 │   ├── models/        # Mongoose schemas
 │   ├── routes/        # API endpoints
-│   └── ...            # Other backend files
+│   ├── controllers/   # Business logic
+│   ├── config/        # DB config, environment
+│   └── server.js      # Main server entry point
 ├── client/            # Frontend (React)
 │   ├── components/    # Reusable React components
 │   ├── pages/         # React pages
-│   └── ...            # Other frontend files
-├── .env               # Environment variables
-├── package.json       # Project metadata and scripts
+│   ├── assets/        # Images, icons, etc.
+│   └── App.js         # Main App component
+├── .env               # Environment variables (to be created)
+├── package.json       # Root project config
 └── README.md          # Project documentation
+```
 
 ## 🛠️ Technologies Used
 
@@ -43,28 +48,38 @@ car-rental/
 
 1. **Clone the Repository:**
 
-   git clone https://github.com/AshishKhatri84/Car-Rental.git
-   cd Car-Rental
+```bash
+git clone https://github.com/AshishKhatri84/Car-Rental.git
+cd Car-Rental
+```
 
 2. **Install Backend Dependencies:**
 
-   cd api
-   npm install
+```bash
+cd api
+npm install
+```
 
 3. **Install Frontend Dependencies:**
 
-   cd ../client
-   npm install
+```bash
+cd ../client
+npm install
+```
 
 4. **Run the Backend Server:**
 
-   cd ../api
-   npm start
+```bash
+cd api
+npm start
+```
 
 5. **Run the Frontend Development Server:**
 
-   cd ../client
-   npm start
+```bash
+cd ../client
+npm start
+```
 
    The frontend will be available at `http://localhost:3000`.
 
